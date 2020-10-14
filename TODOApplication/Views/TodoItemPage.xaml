@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:behaviors="clr-namespace:TODOApplication.Behaviors"
+             x:Class="TODOApplication.Views.TodoItemPage">
+    
+    <ContentPage.Content>
+        <StackLayout Margin="20" VerticalOptions="StartAndExpand">
+            <Label Text="Name" />
+            <Entry Text="{Binding Title}" />
+            <Label Text="Date" />
+            <DatePicker Date="{Binding Date}" />
+            <Label Text="File" />
+            <Grid HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="40"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Entry IsEnabled="False" Text="{Binding FileName}"></Entry>
+                <Button Grid.Column="1" Text="+" Command ="{Binding PikeFileCommand}"></Button>
+            </Grid>
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+            <Button Text="Delete" Command="{Binding DeleteCommand}" />
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

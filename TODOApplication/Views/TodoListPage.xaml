@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:services="clr-namespace:TODOApplication.Services" 
+             xmlns:behaviors="clr-namespace:TODOApplication.Behaviors"
+             x:Class="TODOApplication.Views.TodoListPage"
+             x:Name="ListPage">
+    <ContentPage.Behaviors>
+        <behaviors:TodoListPageBehavior/>
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Command="{Binding AddCommand}"><!--Clicked="OnItemAdded"-->
+            <ToolbarItem.IconImageSource>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android, UWP" Value="plus.png" />
+                </OnPlatform>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <services:InfiniteListView x:Name="listView" ItemsSource="{Binding TodoList}" LoadMoreCommand="{Binding LoadMoreCommand}" Margin="20">
+                <services:InfiniteListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Margin="20,0,0,0" HorizontalOptions="FillAndExpand">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Title, Mode=TwoWay}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference ListPage}}"  CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Button Grid.Column="1" Text="X" Command ="{Binding Path=BindingContext.RemoveCommand, Source={x:Reference ListPage}}" CommandParameter="{Binding .}"></Button>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </services:InfiniteListView.ItemTemplate>
+            </services:InfiniteListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
